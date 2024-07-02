@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        .disabled-link {
+            pointer-events: none;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+<h2>Register</h2>
+
+<form id="registrationForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+    <input type="hidden" id="role" name="role">
+    <div id="message" style="color: red;"></div>
+</form>
+
+<a href="#" id="userRegisterLink" class="disabled-link" onclick="setRoleAndRegister('USER')">Register as User</a><br>
+<a href="#" id="adminRegisterLink" class="disabled-link" onclick="setRoleAndRegister('ADMIN')">Register as Admin</a><br>
+<a href="#" id="deliveryAdminRegisterLink" class="disabled-link" onclick="setRoleAndRegister('DELIVERY_ADMIN')">Register as Delivery Admin</a><br>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const userRegisterLink = document.getElementById('userRegisterLink');
+        const adminRegisterLink = document.getElementById('adminRegisterLink');
+        const deliveryAdminRegisterLink = document.getElementById('deliveryAdminRegisterLink');
+
+        function toggleLinks() {
+            const isEnabled = usernameInput.value && passwordInput.value;
+            userRegisterLink.classList.toggle('disabled-link', !isEnabled);
+            adminRegisterLink.classList.toggle('disabled-link', !isEnabled);
+            deliveryAdminRegisterLink.classList.toggle('disabled-link', !isEnabled);
+        }
+
+        usernameInput.addEventListener('input', toggleLinks);
+        passwordInput.addEventListener('input', toggleLinks);
+
+        function setRoleAndRegister(role) {
+            if (!usernameInput.value || !passwordInput.value) {
+                document.getElementById('message').innerText = 'Username and password are required.';
+                return;
+            }
+            document.getElementById('role').value = role;
+            register();
+        }
+
+        function register() {
+            const form = document.getElementById('registrationForm');
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch(`http://localhost:8080/register/${data.role.toLowerCase()}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.accountNumber) {
+                    document.getElementById('message').style.color = 'green';
+                    document.getElementById('message').innerText = `Registration successful. Account Number: ${data.accountNumber}`;
+                } else {
+                    document.getElementById('message').innerText = data.message;
+                }
+            })
+            .catch(error => {
+                document.getElementById('message').innerText = 'Error: ' + error.message;
+            });
+        }
+    });
+</script>
+</body>
+</html>
