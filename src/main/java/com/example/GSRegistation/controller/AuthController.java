@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class AuthController {
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/auth")
     public ResponseEntity<?> protectedEndpoint() {
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
