@@ -119,7 +119,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>grocerystore-image</finalName>
 	</build>
 
 </project>
