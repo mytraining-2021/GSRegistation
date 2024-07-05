@@ -1,4 +1,5 @@
 FROM openjdk:17
+USER rooot
 EXPOSE 8080
-ADD target/GSRegistation-*.jar grocerystore-image.jar
-ENTRYPOINT ["java","-jar","grocerystore-image.jar"]
+ADD target/GSRegistation-*.jar GSRegistation.jar
+ENTRYPOINT ["java","-jar","GSRegistation.jar"]
