@@ -1,0 +1,27 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Ignore Maven and Gradle directories
+.mvn/
+.gradle/
+
+# IDE and Editor directories
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings
+
+# System and Tool artifacts
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# Commonly large directories not needed in the build
+node_modules/
