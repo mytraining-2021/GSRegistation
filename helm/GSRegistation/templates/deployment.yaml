@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "GSRegistration.fullname" . }}
+  name: {{ include "GSRegistation.fullname" . }}
   labels:
-    {{- include "GSRegistration.labels" . | nindent 4 }}
+    {{- include "GSRegistation.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "GSRegistration.name" . }}
+      app: {{ include "GSRegistation.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "GSRegistration.name" . }}
+        app: {{ include "GSRegistation.name" . }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
